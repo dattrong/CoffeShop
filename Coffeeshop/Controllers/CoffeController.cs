@@ -1,4 +1,5 @@
 ﻿using Coffeeshop.Models;
+using Coffeeshop.NewFolder1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Coffeeshop.Controllers
 {
     public class CoffeController : Controller
     {
+        CafeModel cf = new CafeModel();
         // GET: Coffe
         public ActionResult Index()
         {
@@ -20,35 +22,35 @@ namespace Coffeeshop.Controllers
             // hiển thị hết menu
             return list;
         }
-        public List<MenuModel> MenuByMoney(int money)
+        public List<MENU> MenuByMoney(int money)
         {
             //trả về 1 list món ăn theo giá tiền
-            List<MenuModel> list = new List<MenuModel>();//lấy tất cả menu
+            List<MENU> list = new List<MENU>();//lấy tất cả menu
             // int = bảng menu tên món giá tiền 
             //linq
             list = list.Where(e => e.money <= money).ToList();
             // select * from menu where Money <= money
             return list;
         }
-        public MenuModel coffeByUser(int id)
+        public MENU coffeByUser(int id)
         {
-            List<MenuModel> list = new List<MenuModel>();
-            MenuModel coffe = list.Where(e => e.id == id).FirstOrDefault();
+            List<MENU> list = new List<MENU>();
+            MENU menu = list.Where(e => e.id == id).FirstOrDefault();
             // tên và giá tiền
             List<nguyenlieu> tennguyenlieu = new List<nguyenlieu>();
-            coffe.tennguyenlieu = tennguyenlieu.Where(e => e.menuId == id).ToList();
+            menu.tennguyenlieu = tennguyenlieu.Where(e => e.menuId == id).ToList();
             //coffe đã có tên giá tiên + tên nguyên liệu
-            return coffe;
+            return menu;
 
         }
-        public List<MenuModel> nhieuMon(List<int> id)
+        public List<MENU> nhieuMon(List<int> id)
         {
-            List<MenuModel> list = new List<MenuModel>();
-            List<MenuModel> monan = new List<MenuModel>();
+            List<MENU> list = new List<MENU>();
+            List<MENU> monan = new List<MENU>();
             List<nguyenlieu> tennguyenlieu = new List<nguyenlieu>();
             for (int i = 0; i < id.Count; i++)
             {
-                MenuModel motmon = list.Where(e => e.id == id[i]).FirstOrDefault();
+                MENU motmon = list.Where(e => e.id == id[i]).FirstOrDefault();
                 if (tennguyenlieu.Exists(e => e.menuId == id[i]))
                 {
                     motmon.tennguyenlieu = tennguyenlieu.Where(e => e.menuId == id[i]).ToList();
